@@ -1,1 +1,3 @@
-[pagewidth:297mm][pageheight:210mm]
+[pagewidth:29.7cm][pageheight:21.0cm]
+[columns:2]
+[fsize:16pt][+b][+u]Platypus Implementation Plan[-u][-b]

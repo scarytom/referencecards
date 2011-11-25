@@ -1,3 +1,64 @@
 [pagewidth:29.7cm][pageheight:21.0cm]
 [columns:3]
-[fsize:14pt][+b][+u]Guava Reference Card[-u][-b]
+[ff:TIMES_ROMAN][fsize:14pt]Guava Reference Card
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Functional Units[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+interface Function<F,T>  T apply(F)           [+b]F[-b][]
+interface Predicate<T>   boolean apply(T)     [+b]P[-b][]
+interface Supplier<T>    T get()              [+b]S[-b][]
+
+[+i]Functions[-i]   .identity()[]
+            .constant(E)[]
+            .forSupplier([+b]S[-b]<T>)[]
+            .forMap(Map<F,T>)
+
+
+[+i]Predicates[-i]  .alwaysTrue() / .alwaysFalse()[]
+            .isNull() / .notNull()[]
+            .equalTo(T)[]
+            .instanceOf(Class<?>)[]
+            .in(Collection<? extends T>)[]
+            .not([+b]P[-b]<T>)[]
+            .and([+b]P[-b]<T>,[+b]P[-b]<T>) / .or([+b]P[-b]<T>,[+b]P[-b]<T>)
+
+
+[+i]Suppliers[-i]   .compose([+b]F[-b]<F,T>, [+b]S[-b]<F>)[]
+            .memoize([+b]S[-b]<T>)
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Functional Operations[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+[+i]Iter{able/ator}s[-i][]
+  boolean .all(Iter<T>, [+b]P[-b]<T>)[]
+  boolean .any(Iter<T>, [+b]P[-b]<T>)[]
+  Iter<T> .filter(Iter<T>, [+b]P[-b]<T>)[]
+  T       .find(Iter<T>, [+b]P[-b]<T>, T default)[]
+  Iter<T> .transform(Iter<F>, [+b]F[-b]<F,T>)
+
+
+[+i]Collections2[-i][]
+  Coll<E> .filter(Coll<E>, [+b]P[-b]<E>)[]
+  Coll<T> .transform(Coll<F>, [+b]F[-b]<F,T>)
+
+
+[+i]Lists[-i][]
+  List<T>       .reverse(List<T>)[]
+  List<List<T>> .partition(List<T>, int size)[]
+  List<T>       .transform(List<F>, [+b]F[-b]<F,T>)
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Iterable Builders[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+[+i]ImmutableMap/List/Collection/Set[-i][]
+  .of(K,V)[]
+  .builder()[]
+  .copyOf
+
+
+[+i]Iterators[-i][]
+  Iterator<T> .forArray(T...)[]
+  Iterator<T> .forEnumeration(Enumeration<T>)

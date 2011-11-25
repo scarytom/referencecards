@@ -1,7 +1,10 @@
 [pagewidth:29.7cm][pageheight:21.0cm]
 [tmargin:1.27cm][bmargin:1.27cm][lmargin:1.27cm][rmargin:1.27cm]
 [columns:3]
-[ff:TIMES_ROMAN][fsize:14pt]Guava Reference Card
+[ff:TIMES_ROMAN][fsize:14pt]Guava Reference Card[paraskip:0li]
+
+[ff:TIMES_ROMAN][fsize:6]by Tom Denley -- licensed under a Creative Commons Attribution 3.0 Unported License.
+
 
 [ff:TIMES_ROMAN][fsize:12pt][+b]Functional Units[-b][paraskip:0li]
 

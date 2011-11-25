@@ -1,13 +1,14 @@
 [pagewidth:29.7cm][pageheight:21.0cm]
+[tmargin:1.27cm][bmargin:1.27cm][lmargin:1.27cm][rmargin:1.27cm]
 [columns:3]
 [ff:TIMES_ROMAN][fsize:14pt]Guava Reference Card
 
 [ff:TIMES_ROMAN][fsize:12pt][+b]Functional Units[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
-interface Function<F,T>  T apply(F)           [+b]F[-b][]
-interface Predicate<T>   boolean apply(T)     [+b]P[-b][]
-interface Supplier<T>    T get()              [+b]S[-b][]
+interface Function<F,T>  T apply(F)          [+b]F[-b][]
+interface Predicate<T>   boolean apply(T)    [+b]P[-b][]
+interface Supplier<T>    T get()             [+b]S[-b][]
 
 [+i]Functions[-i]   .identity()[]
             .constant(E)[]
@@ -53,12 +54,131 @@ interface Supplier<T>    T get()              [+b]S[-b][]
 [ff:TIMES_ROMAN][fsize:12pt][+b]Iterable Builders[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
-[+i]ImmutableMap/List/Collection/Set[-i][]
-  .of(K,V)[]
-  .builder()[]
-  .copyOf
+[+i]Immutable{Map/List/Collection/Set}[-i][]
+  .of(...)[]
+  .copyOf({Map/List/Collection/Set})[]
+  .builder()
 
 
 [+i]Iterators[-i][]
-  Iterator<T> .forArray(T...)[]
-  Iterator<T> .forEnumeration(Enumeration<T>)
+  Iterator<T>    .forArray(T...)[]
+  Iterator<T>    .forEnumeration(Enumeration<T>)
+
+
+[+i]Lists[-i][]
+  ArrayList<T>   .newArrayList(T...)[]
+  LinkedList<T>  .newLinkedList(T...)
+
+
+[+i]Maps[-i][]
+  HashMap<K,V>   .newHashMap()[]
+  TreeMap<K,V>   .newTreeMap()[]
+  Map<K,V>       .difference(Map<K,V>, Map<K,V>)[]
+  Map<K,V>       .uniqueIndex(Iter<V>, [+b]F[-b]<V,K>)[]
+  Map<Str,Str>   .fromProperties(Properties)
+
+
+[+i]Sets[-i][]
+  HashSet<E>     .newHashSet()[]
+  TreeSet<E>     .newTreeSet()[]
+  Set<Enum<E>>   .complementOf(Collection<Enum<E>>)[]
+  Set<E>         .newSetFromMap(Map<E, Boolean>)[]
+  Set<E>         .union(Set<E>, Set<E>)[]
+  Set<E>         .intersection(Set<E>, Set<?>)[]
+  Set<E>         .difference(Set<E>, Set<?>)[]
+  Set<E>         .cartesianProduct(List<Set<E>>)
+
+
+[+i]new MapMaker()[-i][]
+  .concurrencyLevel(int)[]
+  .weakKeys() / .weakValues()[]
+  .makeComputingMap(F<K,V>)
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Caches[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+interface Cache<K,V>  V get(K)[]
+                      V getUnchecked(K)[]
+                      void invalidate(K)[]
+                      void invalidateAll()[]
+                      long size()[]
+                      CacheStats stats()[]
+                      Map<K,V> asMap()[]
+                      void cleanUp()
+
+
+[+i]CacheBuilder.newBuilder()[-i][]
+  .concurrencyLevel(int)[]
+  .weakKeys()[]
+  .maximumSize(int)[]
+  .expireAfterWrite(int, TimeUnit)[]
+  .build(CacheLoader.from([+b]F[-b]<K,V>))[]
+  .build(CacheLoader.from([+b]S[-b]<V>))
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Utility[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+[+i]Preconditions[-i]   .checkArgument(boolean)[]
+                .checkState(boolean)[]
+                .checkNotNull(T)[]
+                .checkElementIndex(int i, int size)
+
+
+[+i]Objects[-i][]
+   boolean      .equal(Object, Object)[]
+   T            .firstNotNull(T, T)[]
+   Helper       .toStringHelper(Class<?>)
+
+
+[+i]Throwables[-i][]
+   Throwable    .getRootCause(Throwable)[]
+   String       .getStackTraceAsString(Throwable)
+
+
+[+i]Strings[-i][]
+   String       .nullToEmpty(String)[]
+   String       .emptyToNull(String)[]
+   boolean      .isNullOrEmpty(String)[]
+   String       .padStart(String, int, char)[]
+   String       .padEnd(String, int, char)[]
+   String       .repeat(String, int)
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Tokenisation[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+[+i]Joiner[-i]    .on(String)[]
+          .skipNills()[]
+          .useForNull(String)[]
+          .join(Iterable<?>)
+
+
+[+i]Splitter[-i]  .on(String)[]
+          .omitEmptyStrings()[]
+          .trimResults()[]
+          .limit(int)[]
+          .split(String)
+
+
+[ff:TIMES_ROMAN][fsize:12pt][+b]Ranges[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+class Range<C extends Comparable> {[]
+  boolean  contains(C)[]
+  boolean  containsAll(Iterable<C>)[]
+  boolean  encloses(Range<C>)[]
+  boolean  isConnected(Range<C>)[]
+  Range<C> intersection(Range<C>)[]
+  Range<C> span(Range<C>)[]
+}
+
+
+[+i]Ranges[-i][]
+  Range<C> .open(C,C) / .closed(C,C)[]
+  Range<C> .lessThan(C) / .greaterThan(C)[]
+  Range<C> .atMost(C) / .atLeast(C)[]
+  Range<C> .all()[]
+  Range<C> .singleton(C)[]
+  Range<C> .encloseAll(Iterable<C>)

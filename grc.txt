@@ -95,6 +95,18 @@ interface Supplier<T>    T get()             [+b]S[-b][]
   .makeComputingMap(F<K,V>)
 
 
+[ff:TIMES_ROMAN][fsize:12pt][+b]MultiMaps[-b][paraskip:0li]
+
+[ff:COURIER][fsize:8pt]
+MultiMap<K,V>  ~=  Map<K, Collection<V>>
+
+
+[+i]MultiMaps[-i][]
+  MultiMap<K,V>  .index(Iterable<V>, [+b]F[-b]<V,K>)[]
+  MultiMap<K,V>  .transformValues(MultiMap<K,X>,[]
+                                  [+b]F[-b]<X,V>)
+
+
 [ff:TIMES_ROMAN][fsize:12pt][+b]Caches[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]

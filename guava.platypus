@@ -165,7 +165,7 @@ interface Cache<K,V>  V get(K)[]
 
 [ff:COURIER][fsize:8pt]
 [+i]Joiner[-i]    .on(String)[]
-          .skipNills()[]
+          .skipNulls()[]
           .useForNull(String)[]
           .join(Iterable<?>)
 

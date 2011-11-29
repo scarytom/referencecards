@@ -40,13 +40,13 @@ interface Supplier<T>    T get()             [+b]S[-b][]
   boolean .any(Iter<T>, [+b]P[-b]<T>)[]
   Iter<T> .filter(Iter<T>, [+b]P[-b]<T>)[]
   T       .find(Iter<T>, [+b]P[-b]<T>, T default)[]
-  Iter<T> .transform(Iter<F>, [+b]F[-b]<F,T>)
+  Iter<T> .transform(Iter<F>, [+b]F[-b]<F,T>)[]
+  Iter<T> .concat(Iter<Iter<T>>)
 
 
 [+i]Collections2[-i][]
   Coll<E> .filter(Coll<E>, [+b]P[-b]<E>)[]
   Coll<T> .transform(Coll<F>, [+b]F[-b]<F,T>)
-
 
 [+i]Lists[-i][]
   List<T>       .reverse(List<T>)[]

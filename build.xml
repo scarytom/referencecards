@@ -24,27 +24,6 @@
         <mkdir dir="${build.dir}"/>
     </target>
 
-    <target name="prepare-platypus" depends="prepare">
-        <property name="platypus.dir" value="${build.dir}/platypus"/>
-
-        <mkdir dir="${platypus.dir}"/>
-        <unzip dest="${platypus.dir}">
-            <fileset dir="buildlib">
-                <include name="platypus-*.zip"/>
-            </fileset>
-        </unzip>
-
-        <path id="platypus.path">
-            <fileset dir="${platypus.dir}" includes="platypus.jar"/>
-        </path>
-
-        <java jar="${platypus.dir}/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
-            <env key="PLATYPUS_HOME" value="${platypus.dir}"/>
-            <arg value="-fontlist"/>
-            <classpath refid="platypus.path"/>
-        </java>
-    </target>
-
     <macrodef name="platypus">
         <attribute name="srcfile"/>
         <attribute name="destfile"/>
@@ -59,6 +38,23 @@
             </java>
         </sequential>
     </macrodef>
+
+    <target name="prepare-platypus" depends="prepare">
+        <property name="platypus.dir" value="${build.dir}/platypus"/>
+
+        <mkdir dir="${platypus.dir}"/>
+        <unzip dest="${platypus.dir}">
+            <fileset dir="buildlib">
+                <include name="platypus-*.zip"/>
+            </fileset>
+        </unzip>
+
+        <path id="platypus.path">
+            <fileset dir="${platypus.dir}" includes="platypus.jar"/>
+        </path>
+
+        <platypus srcfile="-fontlist" destfile=""/>
+    </target>
 
     <target name="pdf" description="Create PDFs" depends="prepare,prepare-platypus,version">
         <platypus srcfile="guava.platypus" destfile="${build.dir}/guava-ref-${version.label}.pdf"/>

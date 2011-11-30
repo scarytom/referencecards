@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="referencecards" default="pdf" basedir=".">
 
-    <property name="target.version" value="0.1.4"/>
+    <property name="build.dir" value="build"/>
+
+    <property name="target.version" value="0.0.3"/>
     <tstamp><format property="build.number" pattern="yyyyMMddHHmmss" timezone="GMT"/></tstamp>
-    <tstamp><format property="build.timestamp" pattern="yyyy-MM-dd HH:mm:ss" timezone="GMT"/></tstamp>
 
     <target name="version-for-snapshot" unless="release.build">
         <property name="version.label" value="${target.version}-SNAPSHOT-${build.number}"/>
@@ -15,39 +16,55 @@
 
     <target name="version" depends="version-for-snapshot,version-for-release"/>
 
-    <path id="project.build.class.path">
-        <fileset dir="vendor/buildlib" includes="**/*.jar"/>
-    </path>
+    <target name="clean" description="Cleans this project">
+        <delete dir="${build.dir}" failonerror="true" />
+    </target>
 
-    <target name="pdf" description="create pdf">
-        <mkdir dir="build"/>
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+    </target>
 
-        <mkdir dir="build/platypus"/>
-        <unzip dest="build/platypus">
+    <target name="prepare-platypus" depends="prepare">
+        <property name="platypus.dir" value="${build.dir}/platypus"/>
+
+        <mkdir dir="${platypus.dir}"/>
+        <unzip dest="${platypus.dir}">
             <fileset dir="buildlib">
                 <include name="platypus-*.zip"/>
             </fileset>
         </unzip>
 
-        <java jar="build/platypus/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
-            <env key="PLATYPUS_HOME" value="build/platypus/"/>
-            <arg value="-fontlist"/>
-            <classpath>
-                <pathelement location="build/platypus/platypus.jar"/>
-            </classpath>
-        </java>
+        <path id="platypus.path">
+            <fileset dir="${platypus.dir}" includes="platypus.jar"/>
+        </path>
 
-        <java jar="build/platypus/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
-            <env key="PLATYPUS_HOME" value="build/platypus/"/>
-            <arg value="guava.platypus"/>
-            <arg value="build/guava-ref.pdf"/>
-            <classpath>
-                <pathelement location="build/platypus/platypus.jar"/>
-            </classpath>
+        <java jar="${platypus.dir}/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
+            <env key="PLATYPUS_HOME" value="${platypus.dir}"/>
+            <arg value="-fontlist"/>
+            <classpath refid="platypus.path"/>
         </java>
     </target>
 
-    <target name="release" description="Create a release pdf">
+    <macrodef name="platypus">
+        <attribute name="srcfile"/>
+        <attribute name="destfile"/>
+
+        <sequential>
+            <echo>Building @{destfile}</echo>
+            <java jar="${platypus.dir}/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
+                <env key="PLATYPUS_HOME" value="${platypus.dir}"/>
+                <arg value="@{srcfile}"/>
+                <arg value="@{destfile}"/>
+                <classpath refid="platypus.path"/>
+            </java>
+        </sequential>
+    </macrodef>
+
+    <target name="pdf" description="Create PDFs" depends="prepare,prepare-platypus,version">
+        <platypus srcfile="guava.platypus" destfile="${build.dir}/guava-ref-${version.label}.pdf"/>
+    </target>
+
+    <target name="release" description="Create release PDFs" depends="clean">
         <property name="release.build" value="true"/>
         <antcall target="pdf"/>
     </target>

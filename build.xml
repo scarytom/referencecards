@@ -2,21 +2,22 @@
 <project name="referencecards" default="pdf" basedir=".">
 
     <property name="build.dir" value="build"/>
-
     <property name="target.version" value="0.0.3"/>
     <tstamp><format property="build.number" pattern="yyyyMMddHHmmss" timezone="GMT"/></tstamp>
 
-    <target name="version-for-snapshot" unless="release.build">
+    <target name="version-for-snapshot" unless="version.label">
         <property name="version.label" value="${target.version}-SNAPSHOT-${build.number}"/>
     </target>
 
-    <target name="version-for-release" if="release.build">
+    <target name="version-for-release" unless="version.label">
         <property name="version.label" value="${target.version}"/>
     </target>
 
-    <target name="version" depends="version-for-snapshot,version-for-release"/>
+    <target name="version" depends="version-for-snapshot">
+        <echo message="Building version ${version.label}"/>
+    </target>
 
-    <target name="clean" description="Cleans this project">
+    <target name="clean" description="Clean this project">
         <delete dir="${build.dir}" failonerror="true" />
     </target>
 
@@ -29,7 +30,8 @@
         <attribute name="destfile"/>
 
         <sequential>
-            <echo>Building @{destfile}</echo>
+            <fail message="Platypus was not prepared" unless="platypus.dir"/>
+            <echo message="Building @{destfile}"/>
             <java jar="${platypus.dir}/platypus.jar" fork="true" failonerror="true" maxmemory="256m">
                 <env key="PLATYPUS_HOME" value="${platypus.dir}"/>
                 <arg value="@{srcfile}"/>
@@ -60,8 +62,5 @@
         <platypus srcfile="guava.platypus" destfile="${build.dir}/guava-ref-${version.label}.pdf"/>
     </target>
 
-    <target name="release" description="Create release PDFs" depends="clean">
-        <property name="release.build" value="true"/>
-        <antcall target="pdf"/>
-    </target>
+    <target name="release" description="Create release PDFs" depends="clean,version-for-release,pdf"/>
 </project>

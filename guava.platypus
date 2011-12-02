@@ -6,7 +6,7 @@
 [ff:TIMES_ROMAN][fsize:6]by Tom Denley -- licensed under a Creative Commons Attribution 3.0 Unported License.
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Functional Units[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Functional Units[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 interface Function<F,T>  T apply(F)          [+b]F[-b][]
@@ -32,21 +32,23 @@ interface Supplier<T>    T get()             [+b]S[-b][]
             .memoize([+b]S[-b]<T>)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Functional Operations[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Functional Operations[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 [+i]Iter{able/ator}s[-i][]
   boolean .all(Iter<T>, [+b]P[-b]<T>)[]
   boolean .any(Iter<T>, [+b]P[-b]<T>)[]
+  Iter<T> .concat(Iter<Iter<T>>)[]
   Iter<T> .filter(Iter<T>, [+b]P[-b]<T>)[]
-  T       .find(Iter<T>, [+b]P[-b]<T>, T default)[]
   Iter<T> .transform(Iter<F>, [+b]F[-b]<F,T>)[]
-  Iter<T> .concat(Iter<Iter<T>>)
+  T       .getOnlyElement(Iter<T>, T default)[]
+  T       .find(Iter<T>, [+b]P[-b]<T>, T default)
 
 
 [+i]Collections2[-i][]
   Coll<E> .filter(Coll<E>, [+b]P[-b]<E>)[]
   Coll<T> .transform(Coll<F>, [+b]F[-b]<F,T>)
+
 
 [+i]Lists[-i][]
   List<T>       .reverse(List<T>)[]
@@ -54,7 +56,7 @@ interface Supplier<T>    T get()             [+b]S[-b][]
   List<T>       .transform(List<F>, [+b]F[-b]<F,T>)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Iterable Builders[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Iterable Builders[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 [+i]Immutable{Map/List/Collection/Set}[-i][]
@@ -98,7 +100,7 @@ interface Supplier<T>    T get()             [+b]S[-b][]
   .makeComputingMap(F<K,V>)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]MultiMaps[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]MultiMaps[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 MultiMap<K,V>  ~=  Map<K, Collection<V>>
@@ -110,7 +112,7 @@ MultiMap<K,V>  ~=  Map<K, Collection<V>>
                                   [+b]F[-b]<X,V>)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Caches[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Caches[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 interface Cache<K,V>  V get(K)[]
@@ -132,7 +134,7 @@ interface Cache<K,V>  V get(K)[]
   .build(CacheLoader.from([+b]S[-b]<V>))
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Utility[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Utility[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 [+i]Preconditions[-i]   .checkArgument(boolean)[]
@@ -161,7 +163,7 @@ interface Cache<K,V>  V get(K)[]
    String       .repeat(String, int)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Tokenisation[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Tokenisation[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 [+i]Joiner[-i]    .on(String)[]
@@ -177,7 +179,7 @@ interface Cache<K,V>  V get(K)[]
           .split(String)
 
 
-[ff:TIMES_ROMAN][fsize:12pt][+b]Ranges[-b][paraskip:0li]
+[ff:TIMES_ROMAN][fsize:10pt][+b]Ranges[-b][paraskip:0li]
 
 [ff:COURIER][fsize:8pt]
 class Range<C extends Comparable> {[]
